@@ -1,7 +1,6 @@
 "use client";
 import { Geist, Geist_Mono } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link'; // Import Link
@@ -46,6 +45,13 @@ export default function RootLayout({ children }) {
       }
     }
   }, [pathname, router]); // Re-run effect when pathname or router changes
+
+  useEffect(() => {
+    // Load Bootstrap JS only on client side
+    if (typeof window !== 'undefined') {
+      import('bootstrap/dist/js/bootstrap.bundle.min.js');
+    }
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('userRole');
