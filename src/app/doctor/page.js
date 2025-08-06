@@ -61,6 +61,7 @@ export default function Doctor() {
 
   useEffect(() => {
     const fetchPatients = async () => {
+      setLoading(true); // Set loading to true before API call
       try {
         const response = await fetch('/api/patients'); // Assuming this endpoint returns all patients
         if (!response.ok) {
@@ -75,7 +76,7 @@ export default function Doctor() {
       } catch (e) {
         setError(`Error fetching patients: ${e.message}`);
       } finally {
-        setLoading(false);
+        setLoading(false); // Set loading to false after API call completes
       }
     };
 
@@ -143,7 +144,7 @@ export default function Doctor() {
   }, [patients]);
 
   if (loading) {
-    return <div className="container mt-5">Loading patients...</div>;
+    return <div className="container mt-5 text-center"><div className="spinner-border text-primary" role="status"><span className="visually-hidden">Loading...</span></div><p>Loading patients...</p></div>;
   }
 
   if (error) {
@@ -352,6 +353,7 @@ export default function Doctor() {
     }
 
     try {
+      setLoading(true); // Set loading to true before API call
       const response = await fetch(url, {
         method: method,
         headers: {
@@ -381,6 +383,8 @@ export default function Doctor() {
       }
     } catch (error) {
       alert(`Error: ${error.message}`);
+    } finally {
+      setLoading(false); // Set loading to false after API call completes
     }
   };
 
@@ -397,10 +401,11 @@ export default function Doctor() {
     // New validation: check if at least one new treatment has been added since the lead was opened
     if (patientToClose && (patientToClose.treatments || []).length <= patientToClose.treatmentCountAtLeadOpen) {
       alert('Cannot close lead: At least one new treatment must be added since the lead was opened.');
-      return;
+      return; // Return early if validation fails, loading state remains true without finally
     }
 
     if (window.confirm('Are you sure you want to close this lead?')) {
+      setLoading(true); // Set loading to true before API call
       try {
         const response = await fetch(`/api/patients/${patientIdentifier}/close-lead`, {
           method: 'PUT',
@@ -424,6 +429,8 @@ export default function Doctor() {
         }
       } catch (error) {
         alert(`Error: ${error.message}`);
+      } finally {
+        setLoading(false); // Set loading to false after API call completes
       }
     }
   };
