@@ -7,6 +7,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const router = useRouter();
+  const [loading, setLoading] = useState(false); // Add loading state
 
   useEffect(() => {
     // Redirect if already logged in
@@ -19,6 +20,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
+    setLoading(true); // Set loading to true immediately
 
     try {
       const response = await fetch('/api/login', {
@@ -40,6 +42,8 @@ export default function Login() {
     } catch (error) {
       console.error('Login error:', error);
       setMessage('An error occurred during login. Please try again.');
+    } finally {
+      setLoading(false); // Set loading to false when API call completes
     }
   };
 
@@ -52,31 +56,35 @@ export default function Login() {
             {message}
           </div>
         )}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="usernameInput" className="form-label">Username</label>
-            <input
-              type="text"
-              className="form-control"
-              id="usernameInput"
-              value={userName} // Use userName
-              onChange={(e) => setUserName(e.target.value)} // Use setUserName
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="passwordInput" className="form-label">Password</label>
-            <input
-              type="password"
-              className="form-control"
-              id="passwordInput"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" className="btn btn-primary w-100">Login</button>
-        </form>
+        {loading ? (
+          <div className="text-center"><div className="spinner-border text-primary" role="status"><span className="visually-hidden">Loading...</span></div><p>Logging in...</p></div>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="usernameInput" className="form-label">Username</label>
+              <input
+                type="text"
+                className="form-control"
+                id="usernameInput"
+                value={userName} // Use userName
+                onChange={(e) => setUserName(e.target.value)} // Use setUserName
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="passwordInput" className="form-label">Password</label>
+              <input
+                type="password"
+                className="form-control"
+                id="passwordInput"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" className="btn btn-primary w-100">Login</button>
+          </form>
+        )}
       </div>
     </div>
   );
