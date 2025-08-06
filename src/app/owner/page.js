@@ -236,7 +236,7 @@ export default function Owner() {
 
   return (
     <div className="container mt-5">
-      <h1 className="mb-3">Owner's Dashboard</h1>
+      <h1 className="mb-3">Owner&apos;s Dashboard</h1>
 
       <div className="mb-3">
         <label htmlFor="dateFilter" className="form-label">Filter by Date:</label>
@@ -296,7 +296,7 @@ export default function Owner() {
       <div className="d-flex justify-content-around mb-3 amount-cards-container"> {/* Flex container for amounts */}
         <div className="card flex-fill mx-1 p-1 today-amount-card"> {/* flex-fill and reduced padding/margin */}
           <div className="card-body text-center p-2"> {/* Reduced padding */}
-            <h6 className="m-0 text-white">Today's Collected: ₹{todayAmountCollected.toLocaleString()}</h6>
+            <h6 className="m-0 text-white">Today&apos;s Collected: ₹{todayAmountCollected.toLocaleString()}</h6>
             <div className="d-flex justify-content-center gap-2 mt-2">
               <span className="amount-detail">Cash: ₹{todayCashCollected.toLocaleString()}</span>
               <span className="amount-detail">Online: ₹{todayOnlineCollected.toLocaleString()}</span>
@@ -306,7 +306,7 @@ export default function Owner() {
 
         <div className="card flex-fill mx-1 p-1 month-amount-card"> {/* flex-fill and reduced padding/margin */}
           <div className="card-body text-center p-2"> {/* Reduced padding */}
-            <h6 className="m-0 text-white">This Month's Collected: ₹{monthAmountCollected.toLocaleString()}</h6>
+            <h6 className="m-0 text-white">This Month&apos;s Collected: ₹{monthAmountCollected.toLocaleString()}</h6>
             <div className="d-flex justify-content-center gap-2 mt-2">
               <span className="amount-detail">Cash: ₹{monthCashCollected.toLocaleString()}</span>
               <span className="amount-detail">Online: ₹{monthOnlineCollected.toLocaleString()}</span>
@@ -326,7 +326,7 @@ export default function Owner() {
           className={`btn ${activeTab === 'todayAppointments' ? 'btn-primary' : 'btn-outline-primary'}`}
           onClick={() => setActiveTab('todayAppointments')}
         >
-          Today's Appointments
+          Today&apos;s Appointments
         </button>
         <button
           className={`btn ${activeTab === 'futureAppointments' ? 'btn-primary' : 'btn-outline-primary'}`}
