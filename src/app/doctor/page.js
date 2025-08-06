@@ -568,7 +568,7 @@ export default function Doctor() {
                             .toLocaleDateString('en-GB', { timeZone: 'Asia/Kolkata' })
                         : 'N/A'}
                     </td>
-                    <td>{patient.treatmentCountAtLeadOpen}</td>
+                    <td>{(patient.treatments || []).length}</td>
                     <td>
                       <div className="d-flex justify-content-center gap-1 align-items-center">
                         <button className="btn btn-info btn-sm" onClick={() => setEditingPatientId(editingPatientId === patient._id ? null : patient._id)}>
