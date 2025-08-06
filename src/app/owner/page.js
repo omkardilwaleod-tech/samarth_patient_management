@@ -344,7 +344,7 @@ export default function Owner() {
         <div className="table-responsive">
           <table className="table table-striped table-sm">
             <thead>
-              <tr><th>Name</th><th>Contact Number</th><th>Enquiry Type</th><th>Date of Birth</th><th>Gender</th><th>Address</th><th>Registration Date</th><th>Last Treated</th><th>Total Treatments Done</th><th>Treatments Done</th><th>Amount Collected</th><th>Next Visit Date</th><th>Doctor Name(s)</th>{/* New Column */}</tr>
+              <tr><th>Name</th><th>Contact Number</th><th>Enquiry Type</th><th>Date of Birth</th><th>Gender</th><th>Address</th><th>Registration Date</th><th>Last Treated</th><th>Treatments Done</th><th>Amount Collected</th><th>Next Visit Date</th><th>Doctor Name(s)</th>{/* New Column */}</tr>
             </thead>
             <tbody>
               {finalDisplayedPatients.map((patient) => (
@@ -362,7 +362,6 @@ export default function Owner() {
                           .toLocaleDateString('en-GB', { timeZone: 'Asia/Kolkata' })
                       : 'N/A'}
                   </td>
-                  <td>{patient.treatmentCountAtLeadOpen}</td>
                   <td>
                     {(patient.treatments || []).filter(t => t.treatmentStatus === 'Complete').length}
                   </td>
