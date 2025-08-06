@@ -21,6 +21,7 @@ export default function RootLayout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
   const [currentUserRole, setCurrentUserRole] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     // Check authentication on route change or initial load
@@ -49,7 +50,19 @@ export default function RootLayout({ children }) {
   useEffect(() => {
     // Load Bootstrap JS only on client side
     if (typeof window !== 'undefined') {
-      import('bootstrap/dist/js/bootstrap.bundle.min.js');
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js';
+      script.integrity = 'sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz';
+      script.crossOrigin = 'anonymous';
+      document.head.appendChild(script);
+      
+      return () => {
+        // Cleanup: remove script when component unmounts
+        const existingScript = document.querySelector(`script[src="${script.src}"]`);
+        if (existingScript) {
+          existingScript.remove();
+        }
+      };
     }
   }, []);
 
@@ -68,38 +81,51 @@ export default function RootLayout({ children }) {
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container-fluid">
             <Link className="navbar-brand" href="/">Patient Management App</Link>
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button 
+              className="navbar-toggler d-lg-none" 
+              type="button" 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle navigation"
+            >
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav me-auto mb-2 mb-lg-0"> {/* Use me-auto to push login/logout to right */}
+            
+            {/* Desktop Navigation */}
+            <div className="d-none d-lg-flex navbar-nav ms-auto">
+              {currentUserRole === 'reception' && (
+                <Link className="nav-link" href="/reception">Reception</Link>
+              )}
+              {currentUserRole === 'doctor' && (
+                <Link className="nav-link" href="/doctor">Doctor</Link>
+              )}
+              {currentUserRole === 'owner' && (
+                <Link className="nav-link" href="/owner">Owner</Link>
+              )}
+              {currentUserRole ? (
+                <button className="btn btn-outline-danger ms-2" onClick={handleLogout}>Logout</button>
+              ) : (
+                <Link className="nav-link" href="/login">Login</Link>
+              )}
+            </div>
+            
+            {/* Mobile Navigation */}
+            <div className={`d-lg-none ${mobileMenuOpen ? 'd-block' : 'd-none'} position-absolute top-100 start-0 w-100 bg-light border-top`} style={{zIndex: 1000}}>
+              <div className="container-fluid py-2">
                 {currentUserRole === 'reception' && (
-                  <li className="nav-item">
-                    <Link className="nav-link" href="/reception">Reception</Link>
-                  </li>
+                  <Link className="nav-link d-block py-2" href="/reception" onClick={() => setMobileMenuOpen(false)}>Reception</Link>
                 )}
                 {currentUserRole === 'doctor' && (
-                  <li className="nav-item">
-                    <Link className="nav-link" href="/doctor">Doctor</Link>
-                  </li>
+                  <Link className="nav-link d-block py-2" href="/doctor" onClick={() => setMobileMenuOpen(false)}>Doctor</Link>
                 )}
                 {currentUserRole === 'owner' && (
-                  <li className="nav-item">
-                    <Link className="nav-link" href="/owner">Owner</Link>
-                  </li>
+                  <Link className="nav-link d-block py-2" href="/owner" onClick={() => setMobileMenuOpen(false)}>Owner</Link>
                 )}
-              </ul>
-              <ul className="navbar-nav">
                 {currentUserRole ? (
-                  <li className="nav-item">
-                    <button className="btn btn-outline-danger d-block d-lg-inline-block w-100 w-lg-auto mt-2 mt-lg-0" onClick={handleLogout}>Logout</button>
-                  </li>
+                  <button className="btn btn-outline-danger w-100 mt-2" onClick={() => {handleLogout(); setMobileMenuOpen(false);}}>Logout</button>
                 ) : (
-                  <li className="nav-item">
-                    <Link className="nav-link" href="/login">Login</Link>
-                  </li>
+                  <Link className="nav-link d-block py-2" href="/login" onClick={() => setMobileMenuOpen(false)}>Login</Link>
                 )}
-              </ul>
+              </div>
             </div>
           </div>
         </nav>
