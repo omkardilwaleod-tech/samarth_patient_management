@@ -37,6 +37,7 @@ export default function Owner() {
 
   useEffect(() => {
     const fetchPatients = async () => {
+      setLoading(true); // Set loading to true before API call
       try {
         const response = await fetch('/api/patients'); // Assuming this endpoint returns all patients
         if (!response.ok) {
@@ -51,7 +52,7 @@ export default function Owner() {
       } catch (e) {
         setError(`Error fetching patients: ${e.message}`);
       } finally {
-        setLoading(false);
+        setLoading(false); // Set loading to false after API call completes
       }
     };
 
@@ -227,7 +228,7 @@ export default function Owner() {
   }, [finalDisplayedPatients]);
 
   if (loading) {
-    return <div className="container mt-5">Loading owner data...</div>;
+    return <div className="container mt-5 text-center"><div className="spinner-border text-primary" role="status"><span className="visually-hidden">Loading...</span></div><p>Loading data...</p></div>;
   }
 
   if (error) {
