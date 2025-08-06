@@ -26,13 +26,20 @@ export default function Doctor() {
   // Predefined lists for dropdowns
   const treatmentOptions = [
     '', // Empty option for placeholder
-    'Root Canal',
-    'Crown Placement',
-    'Filling',
-    'Extraction',
-    'Cleaning',
-    'Orthodontics',
-    'Whitening',
+    'Checkup',
+    'X-Ray',
+    'Toothache Treatment',
+    'Tooth Cleaning',
+    'Filling of Decayed Teeth',
+    'Tooth Extraction',
+    'Dentures (False Teeth)',
+    'Braces (Wiring for Irregular Teeth)',
+    'Root Canal Treatment',
+    'Cap/Crown Placement',
+    'Treatment for Bleeding Gums',
+    'Teeth Whitening',
+    'Pediatric (Children\'s) Dental Treatment',
+    'Implant (Tooth Implant) Treatment',
   ];
 
   const doctorNameOptions = [
