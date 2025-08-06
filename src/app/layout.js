@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Link from 'next/link'; // Import Link
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,27 +26,26 @@ export default function RootLayout({ children }) {
       <body className={geistSans.variable}>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container-fluid">
-            <a className="navbar-brand" href="/">Patient Management App</a>
+            <Link className="navbar-brand" href="/">Patient Management App</Link>{/* Changed to Link */}
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  <a className="nav-link" href="/reception">Reception</a>
+                  <Link className="nav-link" href="/reception">Reception</Link>{/* Changed to Link */}
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/doctor">Doctor</a>
+                  <Link className="nav-link" href="/doctor">Doctor</Link>{/* Changed to Link */}
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/owner">Owner</a>
+                  <Link className="nav-link" href="/owner">Owner</Link>{/* Changed to Link */}
                 </li>
               </ul>
             </div>
           </div>
         </nav>
         {children}
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossOrigin="anonymous"></script>
       </body>
     </html>
   );
